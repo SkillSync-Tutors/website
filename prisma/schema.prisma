@@ -14,61 +14,82 @@ datasource db {
     url      = env("DATABASE_URL")
 }
 
-model Post {
-    id        Int      @id @default(autoincrement())
-    name      String
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
-
-    createdBy   User   @relation(fields: [createdById], references: [id])
-    createdById String
-
-    @@index([name])
+model Tutor {
+  id             Int        @id @default(autoincrement())
+  name           String
+  email          String
+  rate           Float
+  commission     Float
+  school         String
+  program        String
+  join_date      DateTime
+  balance        Float      @default(0.0)
+  bio            String
+  hours_taught   Float
+  last_login     DateTime
+  profile_picture String
+  active         Boolean
+  reviews        Review[]
+  tutorStudents  TutorStudent[]
+  tutorSubjects  TutorSubject[]
 }
 
-// Necessary for Next auth
-model Account {
-    id                       String  @id @default(cuid())
-    userId                   String
-    type                     String
-    provider                 String
-    providerAccountId        String
-    refresh_token            String? // @db.Text
-    access_token             String? // @db.Text
-    expires_at               Int?
-    token_type               String?
-    scope                    String?
-    id_token                 String? // @db.Text
-    session_state            String?
-    user                     User    @relation(fields: [userId], references: [id], onDelete: Cascade)
-    refresh_token_expires_in Int?
-
-    @@unique([provider, providerAccountId])
+model Review {
+  id          Int      @id @default(autoincrement())
+  student_id  Int
+  tutor_id    Int
+  description String
+  stars       Int
+  student     Student  @relation(fields: [student_id], references: [id])
+  tutor       Tutor    @relation(fields: [tutor_id], references: [id])
 }
 
-model Session {
-    id           String   @id @default(cuid())
-    sessionToken String   @unique
-    userId       String
-    expires      DateTime
-    user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+model Student {
+  id             Int       @id @default(autoincrement())
+  name           String
+  email          String
+  school         String
+  grade          Int
+  join_date      DateTime
+  parent_id      Int
+  balance        Float     @default(0.0)
+  last_login     DateTime
+  profile_picture String
+  active         Boolean
+  reviews        Review[]
+  tutorStudents  TutorStudent[]
+  parent         Parent    @relation(fields: [parent_id], references: [id])
 }
 
-model User {
-    id            String    @id @default(cuid())
-    name          String?
-    email         String?   @unique
-    emailVerified DateTime?
-    image         String?
-    accounts      Account[]
-    sessions      Session[]
-    posts         Post[]
+model Parent {
+  id          Int       @id @default(autoincrement())
+  name        String
+  email       String
+  balance     Float     @default(0.0)
+  last_login  DateTime
+  active      Boolean
+  students    Student[]
 }
 
-model VerificationToken {
-    identifier String
-    token      String   @unique
-    expires    DateTime
+model TutorStudent {
+  student_id Int
+  tutor_id   Int
+  student    Student @relation(fields: [student_id], references: [id])
+  tutor      Tutor   @relation(fields: [tutor_id], references: [id])
+  @@id([student_id, tutor_id])
+}
 
-    @@unique([identifier, token])
+model Subject {
+  id      Int    @id @default(autoincrement())
+  name    String
+  grade   Int
+  tutorSubjects TutorSubject[]
+}
+
+model TutorSubject {
+  tutor_id   Int
+  subject_id Int
+  tutor      Tutor   @relation(fields: [tutor_id], references: [id])
+  subject    Subject @relation(fields: [subject_id], references: [id])
+  @@id([tutor_id, subject_id])
 }
