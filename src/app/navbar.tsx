@@ -10,16 +10,19 @@ const Navbar = () => {
         </div>
         <div className="flex flex-grow justify-center">
           <a href="#home" className="text-white hover:text-gray-300 mx-2">
-            Home
+            About
           </a>
           <a href="#about" className="text-white hover:text-gray-300 mx-2">
-            About Us
+            Tutor
           </a>
           <a href="#services" className="text-white hover:text-gray-300 mx-2">
-            Services
+            Subjects
           </a>
           <a href="#contact" className="text-white hover:text-gray-300 mx-2">
-            Contact
+            Careers
+          </a>
+          <a href="#contact" className="text-white hover:text-gray-300 mx-2">
+            Contacts
           </a>
         </div>
         <a href="#signin" className="text-white hover:text-gray-300 font-bold">
