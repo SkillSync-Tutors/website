@@ -5,6 +5,18 @@
 await import("./src/env.js");
 
 /** @type {import("next").NextConfig} */
-const config = {};
+const config = {
+    images: {
+        remotePatterns: [
+          {
+            protocol: 'https',
+            hostname: 'cdn.builder.io',
+            port: '',
+            pathname: '/**',
+          },
+        ],
+        dangerouslyAllowSVG: true,
+      },
+};
 
 export default config;

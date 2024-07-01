@@ -1,82 +1,35 @@
 import Link from "next/link";
-
-import { CreatePost } from "~/app/_components/create-post";
-import { getServerAuthSession } from "~/server/auth";
-import { api } from "~/trpc/server";
+import Image from "next/image";
 
 export default async function Home() {
-  const hello = await api.post.hello({ text: "from tRPC" });
-  const session = await getServerAuthSession();
-
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c] text-white">
-      <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16 ">
-        <h1 className="text-5xl font-extrabold tracking-tight sm:text-[5rem]">
-          Create <span className="text-[hsl(280,100%,70%)]">T3</span> App
-        </h1>
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-8">
-          <Link
-            className="flex max-w-xs flex-col gap-4 rounded-xl bg-white/10 p-4 hover:bg-white/20"
-            href="https://create.t3.gg/en/usage/first-steps"
-            target="_blank"
-          >
-            <h3 className="text-2xl font-bold">First Steps →</h3>
-            <div className="text-lg">
-              Just the basics - Everything you need to know to set up your
-              database and authentication.
-            </div>
-          </Link>
-          <Link
-            className="flex max-w-xs flex-col gap-4 rounded-xl bg-white/10 p-4 hover:bg-white/20"
-            href="https://create.t3.gg/en/introduction"
-            target="_blank"
-          >
-            <h3 className="text-2xl font-bold">Documentation →</h3>
-            <div className="text-lg">
-              Learn more about Create T3 App, the libraries it uses, and how to
-              deploy it.
-            </div>
-          </Link>
+    <div className="flex flex-col justify-center font-medium text-white bg-cyan-950 bg-opacity-40">
+      <div className="relative flex flex-col justify-center items-center px-16 py-16 min-h-[732px] max-md:px-5 max-md:max-w-full overflow-hidden">
+        <div className="absolute inset-0 w-full h-full z-10">
+          <Image
+            loading="lazy"
+            src="https://cdn.builder.io/api/v1/image/assets/TEMP/d8840965f38e9b23ffbfd66b672225770ee579507e0168582314555feae0f630?apiKey=ad6b6243cceb47c3a1c6ae8e60c1e63d"
+            alt="SkillSync Tutors"
+            className="object-cover w-full h-full"
+            layout="fill"
+            objectFit="cover"
+          />
+          <div className="absolute inset-0 bg-[#103C42] opacity-[0.37]"></div>
         </div>
-        <div className="flex flex-col items-center gap-2">
-          <p className="text-2xl text-white">
-            {hello ? hello.greeting : "Loading tRPC query..."}
-          </p>
-
-          <div className="flex flex-col items-center justify-center gap-4">
-            <p className="text-center text-2xl text-white">
-              {session && <span>Logged in as {session.user?.name}</span>}
-            </p>
-            <Link
-              href={session ? "/api/auth/signout" : "/api/auth/signin"}
-              className="rounded-full bg-white/10 px-10 py-3 font-semibold no-underline transition hover:bg-white/20"
-            >
-              {session ? "Sign out" : "Sign in"}
-            </Link>
+        <div className="relative flex flex-col items-center z-20 mt-40 max-w-full w-[919px] max-md:mt-10">
+          <div className="self-stretch text-8xl text-center max-md:max-w-full max-md:text-4xl">
+            SkillSync Tutors
+          </div>
+          <div className="mt-24 text-base text-center max-md:mt-10 max-md:max-w-full">
+            Hey There! Welcome to SkillSync Tutors. We connect Grade 11-12
+            students in Ontario with top-notch tutors to help you ace your
+            studies and achieve your university dreams. Let’s get started!
+          </div>
+          <div className="justify-center px-10 py-8 mt-32 text-lg bg-cyan-950 rounded-[50px] max-md:px-5 max-md:mt-10">
+            Learn More
           </div>
         </div>
-
-        <CrudShowcase />
       </div>
-    </main>
-  );
-}
-
-async function CrudShowcase() {
-  const session = await getServerAuthSession();
-  if (!session?.user) return null;
-
-  const latestPost = await api.post.getLatest();
-
-  return (
-    <div className="w-full max-w-xs">
-      {latestPost ? (
-        <p className="truncate">Your most recent post: {latestPost.name}</p>
-      ) : (
-        <p>You have no posts yet.</p>
-      )}
-
-      <CreatePost />
     </div>
   );
 }
