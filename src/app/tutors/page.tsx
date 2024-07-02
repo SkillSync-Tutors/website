@@ -1,50 +1,13 @@
-'use client'
+'use client';
 
-import Image from 'next/image'
-import Carousel from 'react-elastic-carousel'
-import { ArrowLeft, ArrowRight } from 'lucide-react'
-import 'tailwindcss/tailwind.css'
+import Image from 'next/image';
+import Link from 'next/link';
+import Carousel from 'react-elastic-carousel';
+import { ArrowLeft, ArrowRight } from 'lucide-react';
+import 'tailwindcss/tailwind.css';
+import { tutorData } from '~/constants';
 
-const tempData = [
-  {
-    name: 'Black Woman',
-    image: '/tutors/black_woman.png',
-    school: 'Waterloo Comp Sci Student',
-    teachables: ['Functions Grade 11 (MCR3U)', 'Functions Grade 12 (MCR4U)'],
-  },
-  {
-    name: 'White Man',
-    image: '/tutors/white_man.png',
-    school: 'McMaster Health Science Student',
-    teachables: ['Biology Grade 12 (IDK4U)'],
-  },
-  {
-    name: 'Black Woman',
-    image: '/tutors/black_woman.png',
-    school: 'Waterloo Comp Sci Student',
-    teachables: ['Functions Grade 11 (MCR3U)', 'Functions Grade 12 (MCR4U)'],
-  },
-  {
-    name: 'White Man',
-    image: '/tutors/white_man.png',
-    school: 'McMaster Health Science Student',
-    teachables: ['Biology Grade 12 (IDK4U)'],
-  },
-  {
-    name: 'Black Woman',
-    image: '/tutors/black_woman.png',
-    school: 'Waterloo Comp Sci Student',
-    teachables: ['Functions Grade 11 (MCR3U)', 'Functions Grade 12 (MCR4U)'],
-  },
-  {
-    name: 'White Man',
-    image: '/tutors/white_man.png',
-    school: 'McMaster Health Science Student',
-    teachables: ['Biology Grade 12 (IDK4U)'],
-  },
-]
-
-const TutorCard = ({ image, name, school, teachables }) => (
+const TutorCard = ({ id, image, name, school, teachables }) => (
   <div className="bg-white shadow-md rounded-lg overflow-hidden">
     <Image
       src={image}
@@ -62,12 +25,17 @@ const TutorCard = ({ image, name, school, teachables }) => (
           {subject}
         </p>
       ))}
-      <button className="mt-4 bg-teal-800 text-white py-2 px-4 rounded hover:bg-teal-600 transition duration-300">
-        Book Session
-      </button>
+      <div className="mt-4">
+        <Link
+          href={`/tutors/${id}`}
+          className="bg-teal-800 text-white py-2 px-4 rounded hover:bg-teal-600 transition duration-300"
+        >
+          Book Session
+        </Link>
+      </div>
     </div>
   </div>
-)
+);
 
 const TutorPage = () => {
   const breakPoints = [
@@ -75,7 +43,7 @@ const TutorPage = () => {
     { width: 550, itemsToShow: 2 },
     { width: 768, itemsToShow: 3 },
     { width: 1200, itemsToShow: 4 },
-  ]
+  ];
 
   return (
     <div className="mt-12 mx-16 mb-32">
@@ -112,13 +80,13 @@ const TutorPage = () => {
             </div>
           )}
         >
-          {tempData.map((tutor, index) => (
-            <TutorCard key={index} {...tutor} />
+          {tutorData.map((tutor, index) => (
+            <TutorCard key={index} id={index} {...tutor} />
           ))}
         </Carousel>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default TutorPage
+export default TutorPage;
