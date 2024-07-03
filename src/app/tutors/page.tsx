@@ -38,13 +38,6 @@ const TutorCard = ({ id, image, name, school, teachables }) => (
 );
 
 const TutorPage = () => {
-  const breakPoints = [
-    { width: 1, itemsToShow: 1 },
-    { width: 550, itemsToShow: 2 },
-    { width: 768, itemsToShow: 3 },
-    { width: 1200, itemsToShow: 4 },
-  ];
-
   return (
     <div className="mt-12 mx-16 mb-32">
       <h1 className="text-5xl text-teal-800 mb-10">Our Tutors</h1>
