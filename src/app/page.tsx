@@ -7,7 +7,11 @@ import ContactUs from "./contact/contact";
 // function Button({ text, url }) {
 const Button = ({ text, url }) => {
   return (
-    // add stuff here
+    <Link href={url}>
+      <div className="justify-center px-10 py-8 mt-32 text-lg bg-cyan-950 rounded-[50px] max-md:px-5 max-md:mt-10 text-white">
+        {text}
+      </div>
+    </Link>
   );
 };
 
@@ -36,10 +40,7 @@ export default function Home() {
               students in Ontario with top-notch tutors to help you ace your
               studies and achieve your university dreams. Let’s get started!
             </div>
-            {/* <Button text={"Learn More"} url={"/about"} /> */}
-            <Link href="/about" className="justify-center px-10 py-8 mt-32 text-lg bg-cyan-950 rounded-[50px] max-md:px-5 max-md:mt-10">
-                Learn More
-            </Link>
+            <Button text={"Learn More"} url={"/about"} />
           </div>
         </div>
       </div>
@@ -68,9 +69,7 @@ export default function Home() {
                   sessions to help achieve academic dreams. Join us!
                   <br />
                 </div>
-                <Link href="/about" className="justify-center self-start px-7 py-7 mt-11 text-white bg-cyan-950 rounded-[50px] max-md:px-5 max-md:mt-10">
-                    Learn More
-                </Link>
+                <Button text={"Learn More"} url={"/about"} />
               </div>
             </div>
           </div>
