@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import ContactUs from "./_components/contact";
+import ContactUs from "./contact/contact";
 
 export default function Home() {
   return (
@@ -29,9 +29,9 @@ export default function Home() {
               students in Ontario with top-notch tutors to help you ace your
               studies and achieve your university dreams. Let’s get started!
             </div>
-            <div className="justify-center px-10 py-8 mt-32 text-lg bg-cyan-950 rounded-[50px] max-md:px-5 max-md:mt-10">
-              Learn More
-            </div>
+            <Link href="/about" className="justify-center px-10 py-8 mt-32 text-lg bg-cyan-950 rounded-[50px] max-md:px-5 max-md:mt-10">
+                Learn More
+            </Link>
           </div>
         </div>
       </div>
@@ -60,9 +60,9 @@ export default function Home() {
                   sessions to help achieve academic dreams. Join us!
                   <br />
                 </div>
-                <div className="justify-center self-start px-7 py-7 mt-11 text-white bg-cyan-950 rounded-[50px] max-md:px-5 max-md:mt-10">
-                  Learn More
-                </div>
+                <Link href="/about" className="justify-center self-start px-7 py-7 mt-11 text-white bg-cyan-950 rounded-[50px] max-md:px-5 max-md:mt-10">
+                    Learn More
+                </Link>
               </div>
             </div>
           </div>
