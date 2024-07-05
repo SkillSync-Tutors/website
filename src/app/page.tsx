@@ -5,13 +5,17 @@ import Image from "next/image";
 import ContactUs from "./contact/contact";
 
 // function Button({ text, url }) {
-const Button = ({ text, url }) => {
+const Button = ({ text, url, ...props }) => {
   return (
-    <Link href={url}>
-      <div className="justify-center px-10 py-8 mt-32 text-lg bg-cyan-950 rounded-[50px] max-md:px-5 max-md:mt-10 text-white">
-        {text}
+    <div {...props} >
+      <div className="w-fit">
+        <Link href={url}>
+          <div className="justify-center px-4 py-2 text-lg bg-cyan-950 rounded-xl max-md:px-5 max-md:mt-10 text-white text-center">
+            {text}
+          </div>
+        </Link>
       </div>
-    </Link>
+    </div>
   );
 };
 
@@ -40,7 +44,7 @@ export default function Home() {
               students in Ontario with top-notch tutors to help you ace your
               studies and achieve your university dreams. Let’s get started!
             </div>
-            <Button text={"Learn More"} url={"/about"} />
+            <Button text={"Learn More"} url={"/about"} className="mt-32" />
           </div>
         </div>
       </div>
@@ -69,13 +73,15 @@ export default function Home() {
                   sessions to help achieve academic dreams. Join us!
                   <br />
                 </div>
-                <Button text={"Learn More"} url={"/about"} />
+                <div>
+                  <Button text={"Learn More"} url={"/about"} className="mt-20" />
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <ContactUs/>
+      <ContactUs />
     </div>
   );
 }
