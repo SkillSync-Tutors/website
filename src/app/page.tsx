@@ -4,6 +4,13 @@ import Link from "next/link";
 import Image from "next/image";
 import ContactUs from "./contact/contact";
 
+// function Button({ text, url }) {
+const Button = ({ text, url }) => {
+  return (
+    // add stuff here
+  );
+};
+
 export default function Home() {
   return (
     <div>
@@ -29,6 +36,7 @@ export default function Home() {
               students in Ontario with top-notch tutors to help you ace your
               studies and achieve your university dreams. Let’s get started!
             </div>
+            {/* <Button text={"Learn More"} url={"/about"} /> */}
             <Link href="/about" className="justify-center px-10 py-8 mt-32 text-lg bg-cyan-950 rounded-[50px] max-md:px-5 max-md:mt-10">
                 Learn More
             </Link>
