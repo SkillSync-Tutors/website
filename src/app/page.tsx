@@ -5,7 +5,7 @@ import Image from "next/image";
 import ContactUs from "./contact/contact";
 
 // function Button({ text, url }) {
-const Button = ({ text, url, ...props }) => {
+const Button = ({ text, url, ...props }: { text: string, url: string }) => {
   return (
     <div {...props} >
       <div className="w-fit">
@@ -33,7 +33,7 @@ export default function Home() {
               layout="fill"
               objectFit="cover"
             />
-            <div className="absolute inset-0 bg-[#103C42] opacity-[0.37]"></div>
+            <div className="absolute inset-0 bg-teal-900 opacity-[0.37]"></div>
           </div>
           <div className="relative flex flex-col items-center z-20 mt-40 max-w-full w-[919px] max-md:mt-10">
             <div className="self-stretch text-8xl text-center max-md:max-w-full max-md:text-4xl">
@@ -49,14 +49,14 @@ export default function Home() {
         </div>
       </div>
       <div className="flex justify-center items-center px-16 py-20 bg-cyan-800 bg-opacity-10 max-md:px-5">
-        <div className="mt-1.5 w-full max-w-[1133px] max-md:max-w-full">
+        <div className="mt-1.5 w-full max-md:max-w-full">
           <div className="flex gap-5 max-md:flex-col max-md:gap-0">
             <div className="flex flex-col w-3/5 max-md:ml-0 max-md:w-full">
               <Image
                 loading="lazy"
                 src="https://cdn.builder.io/api/v1/image/assets/TEMP/f5638495288d8655a837262afe91bf6b8b6bfa05682dd2bf81a78799fa12445b?apiKey=ad6b6243cceb47c3a1c6ae8e60c1e63d"
                 alt="SkillSync Tutors"
-                className="grow mt-1 w-full aspect-[1.79] max-md:mt-10 max-md:max-w-full"
+                className="grow mt-1 w-full"
                 layout="responsive"
                 width={1000}
                 height={560}
