@@ -6,6 +6,7 @@ import { TRPCReactProvider } from "~/trpc/react";
 
 import Navbar from "./navbar";
 
+import Footer from "./footer";
 
 export const metadata = {
   title: "Create T3 App",
@@ -24,6 +25,7 @@ export default function RootLayout({
         <div className="flex-col">
           <Navbar />
           <TRPCReactProvider>{children}</TRPCReactProvider>
+          <Footer/>
         </div>
       </body>
     </html>
