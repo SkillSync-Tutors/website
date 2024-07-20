@@ -13,29 +13,29 @@ const Navbar = () => {
           <div className="flex-auto my-auto text-black text-xl font-bold ml-2">SkillSync Tutors</div>
         </div>
         <div className="flex items-center">
-          <a href="#home" className="text-black hover:text-gray-300 mx-2">
+          <a href="/home" className="text-black hover:text-gray-300 mx-2">
             View Tutors
           </a>
-          <a href="#about" className="text-black hover:text-gray-300 mx-2">
+          <a href="/about" className="text-black hover:text-gray-300 mx-2">
             About Us
           </a>
-          <a href="#services" className="text-black hover:text-gray-300 mx-2">
+          <a href="/careers" className="text-black hover:text-gray-300 mx-2">
             Careers
           </a>
-          <a href="#contact" className="text-black hover:text-gray-300 mx-2">
+          <a href="/contact" className="text-black hover:text-gray-300 mx-2">
             Contact
           </a>
-          <a href="#cart" className="text-black hover:text-gray-300 mx-2">
+          <a href="/cart" className="text-black hover:text-gray-300 mx-2">
             Cart
           </a>
-          <a href="#login" className="text-black hover:text-gray-300 mx-2">
+          <a href="/login" className="text-black hover:text-gray-300 mx-2">
             Login
           </a>
           <button
             type="button"
             className="bg-cyan-950 text-white hover:text-gray-300 py-2 px-4 rounded ml-2"
           >
-            <a href="#signin" className="text-white">
+            <a href="/api/auth/signin" className="text-white">
               Get Started
             </a>
           </button>
