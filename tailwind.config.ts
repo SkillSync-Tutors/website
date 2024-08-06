@@ -16,7 +16,13 @@ export default {
   ],
   daisyui: {
     themes: [
-      'light',
+      {
+        light: {
+          ...require("daisyui/src/theming/themes")["light"],
+          primary: "#155E75",
+          secondary: "teal",
+        },
+      },
     ],
   },
 } satisfies Config;
