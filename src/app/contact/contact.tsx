@@ -27,6 +27,9 @@ export default function ContactForm() {
 
   return (
     <div>
+      <div>
+        
+      </div>
       <div className="grid grid-cols-2 gap-3">
         <form
           onSubmit={handleSubmit}
@@ -34,7 +37,7 @@ export default function ContactForm() {
         >
           <h1 className="ml-auto mr-auto mb-4 mt-0 text-5xl">Contact Us</h1>
           <div className="flex gap-4 w-full">
-            <label className="input flex items-center gap-2 text-black rounded-lg px-3 py-2 w-full">
+            <label className="input flex items-center gap-2 text-black border-black rounded-lg px-3 py-2 w-full">
               Name
               <input
                 type="text"
@@ -46,7 +49,7 @@ export default function ContactForm() {
               />
             </label>
           </div>
-          <label className="input flex items-center gap-2 text-black rounded-lg px-3 py-2 w-full">
+          <label className="input flex items-center gap-2 text-black border-black rounded-lg px-3 py-2 w-full">
             Email:
             <input
               type="email"
@@ -57,7 +60,7 @@ export default function ContactForm() {
               onChange={handleChange}
             />
           </label>
-          <label className="input flex items-center gap-2 text-black rounded-lg px-3 py-2 w-full">
+          <label className="input flex items-center gap-2 text-black border-black rounded-lg px-3 py-2 w-full">
             Subject:
             <input
               type="text"
@@ -67,11 +70,11 @@ export default function ContactForm() {
               onChange={handleChange}
             />
           </label>
-          <label className="input flex items-center gap-2 text-black rounded-lg px-3 py-2 w-full">
+          <label className="input flex items-center gap-2 text-black border-black rounded-lg px-3 py-2 w-full">
             Message:
             <textarea
               name="message"
-              className="grow max-w-xs"
+              className="grow max-w-xs max-h-9"
               value={formData.message}
               onChange={handleChange}
             />
@@ -84,7 +87,7 @@ export default function ContactForm() {
         </form>
 
         <div>
-          <div className="mr-auto ml-auto w-[76%] my-10">
+          <div className="mr-auto ml-auto w-[66%] mt-[150px] mb-[250px]">
             <Image
               src="https://cdn.builder.io/api/v1/image/assets/TEMP/1adaa6c4d0c9d249d1cede565fba6576c5709682d7e00b57fc1efb5c8a1aa377?apiKey=ad6b6243cceb47c3a1c6ae8e60c1e63d"
               alt="Contact image"
