@@ -9,6 +9,12 @@ export default {
       fontFamily: {
         sans: ["var(--font-geist-sans)", ...fontFamily.sans],
       },
+      colors: {
+        customCyan: '#28707B',
+      },
+      opacity: {
+        '9': '0.09',
+      },
     },
   },
   plugins: [
