@@ -1,23 +1,25 @@
 'use client'
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { api } from "~/trpc/react";
 
-const subjects = [
-  "Math", "Science", "English", "History", "Physics", "Chemistry", "Biology",
-  "Literature", "Computer Science", "Foreign Language", "Art", "Music"
-];
+type Subject = {
+  id: number;
+  name: string;
+};
 
 export default function StudentOnboarding() {
   const { data: session } = useSession();
   const router = useRouter();
   const [studentInfo, setStudentInfo] = useState({
     grade: "",
-    subjects: [] as string[],
-    dreamProgram: ""
+    subjectIds: [] as number[],
+    goalsAndObjectives: "",
+    tutoringPreference: "BOTH",
   });
+  const [subjects, setSubjects] = useState<Subject[]>([]);
 
   const createProfile = api.student.createProfile.useMutation({
     onSuccess: () => {
@@ -29,14 +31,22 @@ export default function StudentOnboarding() {
     },
   });
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  const { data: subjectsData } = api.student.getAllSubjects.useQuery();
+
+  useEffect(() => {
+    if (subjectsData) {
+      setSubjects(subjectsData);
+    }
+  }, [subjectsData]);
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setStudentInfo(prev => ({ ...prev, [name]: value }));
   };
 
   const handleSubjectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const selectedSubjects = Array.from(e.target.selectedOptions, option => option.value);
-    setStudentInfo(prev => ({ ...prev, subjects: selectedSubjects }));
+    const selectedSubjectIds = Array.from(e.target.selectedOptions, option => parseInt(option.value));
+    setStudentInfo(prev => ({ ...prev, subjectIds: selectedSubjectIds }));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -46,8 +56,9 @@ export default function StudentOnboarding() {
         name: session.user.name,
         email: session.user.email,
         grade: parseInt(studentInfo.grade),
-        subjects: studentInfo.subjects,
-        dreamProgram: studentInfo.dreamProgram,
+        subjectIds: studentInfo.subjectIds,
+        goalsAndObjectives: studentInfo.goalsAndObjectives,
+        tutoringPreference: studentInfo.tutoringPreference as "IN_PERSON" | "ONLINE" | "BOTH",
       });
     }
   };
@@ -64,54 +75,63 @@ export default function StudentOnboarding() {
           <form onSubmit={handleSubmit}>
             <div className="form-control">
               <label className="label">
-                <span className="label-text">What grade are you in?</span>
+                <span className="label-text">Grade</span>
               </label>
-              <select 
-                className="select select-bordered w-full" 
+              <input
+                type="number"
                 name="grade"
                 value={studentInfo.grade}
                 onChange={handleInputChange}
-                required
-              >
-                <option value="">Select Grade</option>
-                {[...Array(12)].map((_, i) => (
-                  <option key={i} value={i+1}>Grade {i+1}</option>
-                ))}
-              </select>
-            </div>
-
-            <div className="form-control mt-4">
-              <label className="label">
-                <span className="label-text">Which subjects do you need help with?</span>
-              </label>
-              <select 
-                multiple
-                className="select select-bordered w-full"
-                value={studentInfo.subjects}
-                onChange={handleSubjectChange}
-                required
-              >
-                {subjects.map((subject) => (
-                  <option key={subject} value={subject}>{subject}</option>
-                ))}
-              </select>
-            </div>
-
-            <div className="form-control mt-4">
-              <label className="label">
-                <span className="label-text">What is your dream college program?</span>
-              </label>
-              <input 
-                type="text" 
-                placeholder="e.g. Computer Science at MIT" 
-                className="input input-bordered" 
-                name="dreamProgram"
-                value={studentInfo.dreamProgram}
-                onChange={handleInputChange}
+                className="input input-bordered"
                 required
               />
             </div>
-
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text">Subjects</span>
+              </label>
+              <select
+                multiple
+                name="subjectIds"
+                value={studentInfo.subjectIds.map(String)}
+                onChange={handleSubjectChange}
+                className="select select-bordered"
+                required
+              >
+                {subjects.map(subject => (
+                  <option key={subject.id} value={subject.id}>{subject.name}</option>
+                ))}
+              </select>
+            </div>
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text">Goals and Objectives</span>
+              </label>
+              <textarea
+                name="goalsAndObjectives"
+                value={studentInfo.goalsAndObjectives}
+                onChange={handleInputChange}
+                className="textarea textarea-bordered h-24"
+                placeholder="Describe your short-term and long-term academic goals, career aspirations, etc."
+                required
+              />
+            </div>
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text">Tutoring Preference</span>
+              </label>
+              <select
+                name="tutoringPreference"
+                value={studentInfo.tutoringPreference}
+                onChange={handleInputChange}
+                className="select select-bordered"
+                required
+              >
+                <option value="IN_PERSON">In-Person</option>
+                <option value="ONLINE">Online</option>
+                <option value="BOTH">Both In-Person and Online</option>
+              </select>
+            </div>
             <div className="form-control mt-6">
               <button 
                 type="submit" 

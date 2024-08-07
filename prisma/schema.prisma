@@ -7,100 +7,52 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Tutor {
-  id             Int        @id @default(autoincrement())
-  name           String
-  email          String
-  rate           Float
-  commission     Float
-  school         String
-  program        String
-  join_date      DateTime
-  balance        Float      @default(0.0)
-  bio            String
-  hours_taught   Float
-  last_login     DateTime
-  profile_picture String
-  active         Boolean
-  reviews        Review[]
-  tutorStudents  TutorStudent[]
-  tutorSubjects  TutorSubject[]
-}
-
-model Review {
-  id          Int      @id @default(autoincrement())
-  student_id  Int
-  tutor_id    Int
-  description String
-  stars       Int
-  student     Student  @relation(fields: [student_id], references: [id])
-  tutor       Tutor    @relation(fields: [tutor_id], references: [id])
-}
-
-model Student {
-  id             Int       @id @default(autoincrement())
-  name           String
-  email          String
-  school         String
-  grade          Int
-  join_date      DateTime
-  parent_id      Int
-  balance        Float     @default(0.0)
-  last_login     DateTime
-  profile_picture String
-  active         Boolean
-  reviews        Review[]
-  tutorStudents  TutorStudent[]
-  parent         Parent    @relation(fields: [parent_id], references: [id])
-}
-
-model Parent {
-  id          Int       @id @default(autoincrement())
-  name        String
-  email       String
-  balance     Float     @default(0.0)
-  last_login  DateTime
-  active      Boolean
-  students    Student[]
-}
-
-model TutorStudent {
-  student_id Int
-  tutor_id   Int
-  student    Student @relation(fields: [student_id], references: [id])
-  tutor      Tutor   @relation(fields: [tutor_id], references: [id])
-  @@id([student_id, tutor_id])
-}
-
-model Subject {
-  id      Int    @id @default(autoincrement())
-  name    String
-  grade   Int
-  tutorSubjects TutorSubject[]
-}
-
-model TutorSubject {
-  tutor_id   Int
-  subject_id Int
-  tutor      Tutor   @relation(fields: [tutor_id], references: [id])
-  subject    Subject @relation(fields: [subject_id], references: [id])
-  @@id([tutor_id, subject_id])
-}
-
-// NextAuth.js models
-
 model User {
-  id            Int              @id @default(autoincrement())
+  id            Int       @id @default(autoincrement())
   name          String?
-  email         String?          @unique
+  email         String?   @unique
   emailVerified DateTime?
   image         String?
+  role          String    // "TUTOR" or "STUDENT"
+  tutor         Tutor?
+  student       Student?
   accounts      Account[]
   sessions      Session[]
 }
 
+model Tutor {
+  id           Int      @id @default(autoincrement())
+  userId       Int      @unique
+  user         User     @relation(fields: [userId], references: [id])
+  rate         Float
+  bio          String?
+  hoursTaught  Float    @default(0)
+  subjects     Subject[]
+  students     Student[]
+}
+
+model Student {
+  id                Int      @id @default(autoincrement())
+  userId            Int      @unique
+  user              User     @relation(fields: [userId], references: [id])
+  grade             Int
+  goalsAndObjectives String?
+  tutoringPreference String  // "IN_PERSON" or "ONLINE" or "BOTH"
+  tutors            Tutor[]
+  subjects          Subject[]
+}
+
+model Subject {
+  id       Int       @id @default(autoincrement())
+  name     String    @unique
+  tutors   Tutor[]
+  students Student[]
+}
+
+// NextAuth.js models
+
 model Account {
-  id                Int       @id @default(autoincrement())
+  id                Int     @id @default(autoincrement())
   userId            Int
   type              String
   provider          String
@@ -112,23 +64,23 @@ model Account {
   scope             String?
   id_token          String?
   session_state     String?
-  oauth_token_secret String?
-  oauth_token       String?
-  user              User      @relation(fields: [userId], references: [id])
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
 }
 
 model Session {
-  id           Int       @id @default(autoincrement())
-  sessionToken String    @unique
+  id           Int      @id @default(autoincrement())
+  sessionToken String   @unique
   userId       Int
   expires      DateTime
-  user         User      @relation(fields: [userId], references: [id])
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model VerificationToken {
   identifier String
-  token      String    @unique
+  token      String   @unique
   expires    DateTime
+
+  @@unique([identifier, token])
 }

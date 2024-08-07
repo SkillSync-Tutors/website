@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { createTRPCRouter, protectedProcedure } from "../trpc";
+import { createTRPCRouter, protectedProcedure, publicProcedure } from "../trpc";
 import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
@@ -19,24 +19,36 @@ export const studentRouter = createTRPCRouter({
       name: z.string(),
       email: z.string().email(),
       grade: z.number(),
-      subjects: z.array(z.string()),
-      dreamProgram: z.string(),
+      subjectIds: z.array(z.number()),
+      goalsAndObjectives: z.string(),
+      tutoringPreference: z.enum(["IN_PERSON", "ONLINE", "BOTH"]),
     }))
     .mutation(async ({ input }) => {
-      const student = await prisma.student.create({
+      const user = await prisma.user.create({
         data: {
           name: input.name,
           email: input.email,
-          grade: input.grade,
-          school: "", // You might want to add this to the onboarding form
-          join_date: new Date(),
-          parent_id: 1, // You'll need to handle parent association
-          last_login: new Date(),
-          profile_picture: "", // You might want to handle this separately
-          active: true,
-          // Handle subjects association if needed
+          role: "STUDENT",
+          student: {
+            create: {
+              grade: input.grade,
+              goalsAndObjectives: input.goalsAndObjectives,
+              tutoringPreference: input.tutoringPreference,
+              subjects: {
+                connect: input.subjectIds.map(id => ({ id })),
+              },
+            },
+          },
+        },
+        include: {
+          student: true,
         },
       });
-      return student;
+      return user.student;
     }),
+
+  getAllSubjects: publicProcedure.query(async () => {
+    const subjects = await prisma.subject.findMany();
+    return subjects;
+  }),
 });

@@ -9,6 +9,7 @@
     "db:migrate": "prisma migrate deploy",
     "db:push": "prisma db push",
     "db:studio": "prisma studio",
+    "db:seed": "tsx prisma/seed.ts",
     "dev": "next dev -p 6942",
     "postinstall": "prisma generate",
     "lint": "next lint",
@@ -35,6 +36,7 @@
     "server-only": "^0.0.1",
     "styled-components": "^6.1.11",
     "superjson": "^2.2.1",
+    "tsx": "^4.16.5",
     "zod": "^3.23.3"
   },
   "devDependencies": {
