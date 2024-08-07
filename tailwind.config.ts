@@ -9,6 +9,10 @@ export default {
       fontFamily: {
         sans: ["var(--font-geist-sans)", ...fontFamily.sans],
       },
+      colors: {
+        customGrey: '#f5f8f8',
+        customCyan: '#3d707a',
+      },
     },
   },
   plugins: [
@@ -16,7 +20,13 @@ export default {
   ],
   daisyui: {
     themes: [
-      'light',
+      {
+        light: {
+          ...require("daisyui/src/theming/themes")["light"],
+          primary: "#155E75",
+          secondary: "teal",
+        },
+      },
     ],
   },
 } satisfies Config;
