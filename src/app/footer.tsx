@@ -15,7 +15,6 @@ export default async function Footer() {
                     <a className="hover:text-gray-500 transition duration-150 ease-in-out hover:no-underline" href="/contact">Contact</a>
                     <a className="hover:text-gray-500 transition duration-150 ease-in-out hover:no-underline" href="/shop">Shop</a>
                     <a className="hover:text-gray-500 transition duration-150 ease-in-out hover:no-underline" href="/subjects">Subjects</a>
-                    <a className="hover:text-gray-500 transition duration-150 ease-in-out hover:no-underline" href="/services">Services</a>
                 </div>
             </div>
             <div className="flex flex-col space-y-6 pt-20 p-10 pl-20">
