@@ -6,7 +6,8 @@ import Image from 'next/image';
 
 export default function ContactForm() {
   const [formData, setFormData] = useState({
-    name: '',
+    firstName: '',
+    lastName: '',
     email: '',
     subject: '',
     message: '',
@@ -27,28 +28,48 @@ export default function ContactForm() {
 
   return (
     <div>
-      <div>
-        
-      </div>
-      <div className="grid grid-cols-2 gap-3">
+      <div className="py-20 grid grid-cols-2 gap-3 bg-customGrey px-20">
+        <div className="mx-20 my-5">
+          <h1 className="text-[50px] text-customCyan font-semibold">
+            Contact Us
+          </h1>
+          <p className="mt-6">
+            Have questions or need assistance? We're here to help! Reach out to
+            us anytime, and we'll get back to you as soon as possible.
+          </p>
+          <p className="mt-6">SkillSyncTutors@gmail.com</p>
+          <p>(416) 930-8976</p>
+          <button className="btn btn-primary mt-5">
+            Frequently Asked Questions
+          </button>
+        </div>
+
         <form
           onSubmit={handleSubmit}
-          className="mr-auto ml-auto flex flex-col space-y-2 my-auto"
+          className="mr-auto ml-auto flex flex-col space-y-2 my-auto pt-8"
         >
-          <h1 className="ml-auto mr-auto mb-4 mt-0 text-5xl">Contact Us</h1>
-          <div className="flex gap-4 w-full">
-            <label className="input flex items-center gap-2 text-black border-black rounded-lg px-3 py-2 w-full">
-              Name
-              <input
-                type="text"
-                name="name"
-                className="grow text-black"
-                placeholder="First + Last"
-                value={formData.name}
-                onChange={handleChange}
-              />
-            </label>
-          </div>
+          <label className="input flex items-center gap-2 text-black border-black rounded-lg px-3 py-2 w-full">
+            First Name
+            <input
+              type="text"
+              name="firstName"
+              className="grow text-black"
+              placeholder="John"
+              value={formData.firstName}
+              onChange={handleChange}
+            />
+          </label>
+          <label className="input flex items-center gap-2 text-black border-black rounded-lg px-3 py-2 w-full">
+            Last Name
+            <input
+              type="text"
+              name="lastName"
+              className="grow text-black"
+              placeholder="Doe"
+              value={formData.lastName}
+              onChange={handleChange}
+            />
+          </label>
           <label className="input flex items-center gap-2 text-black border-black rounded-lg px-3 py-2 w-full">
             Email:
             <input
@@ -85,18 +106,6 @@ export default function ContactForm() {
             </button>
           </div>
         </form>
-
-        <div>
-          <div className="mr-auto ml-auto w-[66%] mt-[150px] mb-[250px]">
-            <Image
-              src="https://cdn.builder.io/api/v1/image/assets/TEMP/1adaa6c4d0c9d249d1cede565fba6576c5709682d7e00b57fc1efb5c8a1aa377?apiKey=ad6b6243cceb47c3a1c6ae8e60c1e63d"
-              alt="Contact image"
-              width={1600}
-              height={900}
-              className="mt-9 rounded-lg w-full aspect-[1.41] max-md:mt-10 max-md:max-w-full"
-            />
-          </div>
-        </div>
       </div>
     </div>
   );

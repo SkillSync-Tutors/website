@@ -65,7 +65,7 @@ export default function Home() {
           </div>
         </div>
       </div>
-      <div className="container mx-auto px-4 py-8 bg-customCyan bg-opacity-9 max-w-full">
+      <div className="container mx-auto px-4 py-8 bg-customGrey max-w-full">
         <h2 className="text-5xl font-semibold text-center mb-8 mt-[80px]">
           Why 1-on-1 Tutor?
         </h2>

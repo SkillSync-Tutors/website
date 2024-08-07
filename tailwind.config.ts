@@ -10,10 +10,8 @@ export default {
         sans: ["var(--font-geist-sans)", ...fontFamily.sans],
       },
       colors: {
-        customCyan: '#28707B',
-      },
-      opacity: {
-        '9': '0.09',
+        customGrey: '#f5f8f8',
+        customCyan: '#3d707a',
       },
     },
   },
