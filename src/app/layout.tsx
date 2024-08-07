@@ -1,12 +1,8 @@
 import "~/styles/globals.css";
-
 import { GeistSans } from "geist/font/sans";
-
-import { TRPCReactProvider } from "~/trpc/react";
-
 import Navbar from "./navbar";
-
 import Footer from "./footer";
+import Providers from "./providers";
 
 export const metadata = {
   title: "Create T3 App",
@@ -22,11 +18,13 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${GeistSans.variable}`}>
       <body>
-        <div className="flex-col">
-          <Navbar />
-          <TRPCReactProvider>{children}</TRPCReactProvider>
-          <Footer/>
-        </div>
+        <Providers>
+          <div className="flex-col">
+            <Navbar />
+            {children}
+            <Footer/>
+          </div>
+        </Providers>
       </body>
     </html>
   );
