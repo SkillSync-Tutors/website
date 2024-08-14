@@ -13,8 +13,7 @@ import { db } from "~/server/db";
 declare module "next-auth" {
   interface Session extends DefaultSession {
     user: {
-      id: string;
-      role: string;
+      id: number;
     } & DefaultSession["user"];
   }
 }
@@ -26,7 +25,6 @@ export const authOptions: NextAuthOptions = {
       user: {
         ...session.user,
         id: user.id,
-        role: user.role,
       },
     }),
   },
@@ -41,13 +39,10 @@ export const authOptions: NextAuthOptions = {
     signIn: '/signin',
     error: '/signin',
   },
-  events: {
-    createUser: async ({ user }) => {
-      await db.user.update({
-        where: { id: user.id },
-        data: { role: 'STUDENT' },
-      });
-    },
+  session: {
+    strategy: "database",
+    maxAge: 30 * 24 * 60 * 60, // 30 days
+    updateAge: 24 * 60 * 60, // 24 hours
   },
 };
 

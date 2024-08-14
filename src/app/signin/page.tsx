@@ -14,8 +14,8 @@ export default function SignIn() {
   const [error, setError] = useState<string | null>(null);
 
   const checkOnboardingStatus = api.student.checkOnboardingStatus.useQuery(
-    { email: session?.user?.email ?? "" },
-    { enabled: !!session?.user?.email }
+    { userId: session?.user?.id ?? 0 },
+    { enabled: !!session?.user?.id }
   );
 
   useEffect(() => {
@@ -26,13 +26,8 @@ export default function SignIn() {
   }, [searchParams]);
 
   useEffect(() => {
-    if (status === "authenticated") {
-      if (session?.user?.email) {
-        checkOnboardingStatus.refetch();
-      } else {
-        console.error("Authenticated but no user email");
-        setError("Unable to retrieve user information. Please try signing in again.");
-      }
+    if (status === "authenticated" && session?.user?.id) {
+      checkOnboardingStatus.refetch();
     }
   }, [status, session]);
 
@@ -50,7 +45,7 @@ export default function SignIn() {
     setIsLoading(true);
     setError(null);
     try {
-      const result = await signIn("google", { callbackUrl: "/", redirect: false });
+      const result = await signIn("google", { callbackUrl: "/signin", redirect: false });
       if (result?.error) {
         setError(result.error);
       }

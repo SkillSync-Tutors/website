@@ -51,10 +51,9 @@ export default function StudentOnboarding() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (session?.user?.name && session?.user?.email) {
+    if (session?.user?.id) {
       createProfile.mutate({
-        name: session.user.name,
-        email: session.user.email,
+        userId: session.user.id,
         grade: parseInt(studentInfo.grade),
         subjectIds: studentInfo.subjectIds,
         goalsAndObjectives: studentInfo.goalsAndObjectives,
