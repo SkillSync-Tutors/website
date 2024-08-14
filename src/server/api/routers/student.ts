@@ -5,6 +5,29 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 export const studentRouter = createTRPCRouter({
+  checkOnboardingStatus: publicProcedure
+    .input(z.object({ email: z.string().email() }))
+    .query(async ({ input }) => {
+      console.log("Checking onboarding status for email:", input.email);
+      
+      const user = await prisma.user.findUnique({
+        where: { email: input.email },
+        include: { student: true, tutor: true },
+      });
+
+      console.log("User found:", user);
+
+      if (!user) {
+        console.log("No user found, onboarding not completed");
+        return { onboardingCompleted: false };
+      }
+
+      const onboardingCompleted = !!(user.student || user.tutor);
+      console.log("Onboarding completed:", onboardingCompleted);
+
+      return { onboardingCompleted };
+    }),
+
   checkProfile: protectedProcedure
     .input(z.object({ email: z.string().email() }))
     .query(async ({ input }) => {

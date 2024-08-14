@@ -35,7 +35,7 @@ const Navbar = () => {
             type="button"
             className="bg-cyan-950 text-white hover:text-gray-300 py-2 px-4 rounded ml-2"
           >
-            <a href="/api/auth/signin" className="text-white">
+            <a href="/signin" className="text-white">
               Get Started
             </a>
           </button>
