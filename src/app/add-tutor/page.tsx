@@ -7,7 +7,7 @@ function TutorApplication() {
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
-    email: '',
+    contact: '',
     subjects: '',
     yearsOfExperience: '',
     rate: '',
@@ -27,7 +27,7 @@ function TutorApplication() {
     setFormData({
       firstName: '',
       lastName: '',
-      email: '',
+      contact: '',
       subjects: '',
       yearsOfExperience: '',
       rate: '',
@@ -37,7 +37,7 @@ function TutorApplication() {
   return (
     <div className="flex items-center justify-center p-12">
       <div className="flex gap-5 max-md:flex-col max-md:gap-0">
-        <div className="flex flex-col w-[100%] max-md:ml-0 ">
+        <div className="flex flex-col w-[100%] max-md:ml-0 py-5 rounded-lg shadow-2xl">
           <form onSubmit={handleSubmit} className="flex flex-col grow px-5  font-medium text-black ">
             <div className="text-6xl w-800 max-md:text-4xl">
               Tutor Application
@@ -66,11 +66,11 @@ function TutorApplication() {
                 />
               </div>
             </div>
-            <div className="mt-6 max-md:max-w-full">Email</div>
+            <div className="mt-6 max-md:max-w-full">Contact (Email/Phone)</div>
             <input
-              type="email"
-              name="email"
-              value={formData.email}
+              type="text"
+              name="contact"
+              value={formData.contact}
               onChange={handleChange}
               required
               className="shrink-0 mt-2.5 rounded-xl bg-zinc-300 h-10 p-2 w-full"

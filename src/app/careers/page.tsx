@@ -6,7 +6,7 @@ export default async function About() {
               <div className="absolute text-white text-5xl -translate-y-20 text-center">
                 Interested In Becoming A Tutor? <br/> Join Us Today!
               </div>
-              <a href="/services" className="absolute translate-y-10" target="_blank">
+              <a href="\add-tutor" className="absolute translate-y-10" target="_blank">
                 <div className=" text-white text-2xl bg-[#103C42] p-5 rounded-lg scale-75 hover:scale-[0.8] hover:brightness-[0.95] transition duration-150 ease-in-out">
                   Apply Now
                 </div>
