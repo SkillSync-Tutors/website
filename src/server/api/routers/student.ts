@@ -1,21 +1,10 @@
 import { z } from "zod";
-import { createTRPCRouter, protectedProcedure, publicProcedure } from "../trpc";
+import { createTRPCRouter, protectedProcedure } from "../trpc";
 import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
 export const studentRouter = createTRPCRouter({
-  checkOnboardingStatus: protectedProcedure
-    .input(z.object({ userId: z.number() }))
-    .query(async ({ input }) => {
-      const user = await prisma.user.findUnique({
-        where: { id: input.userId },
-        include: { student: true },
-      });
-
-      return { onboardingCompleted: !!user?.student };
-    }),
-
   createProfile: protectedProcedure
     .input(z.object({
       userId: z.number(),
@@ -38,8 +27,4 @@ export const studentRouter = createTRPCRouter({
       });
       return student;
     }),
-
-  getAllSubjects: publicProcedure.query(async () => {
-    return prisma.subject.findMany();
-  }),
 });

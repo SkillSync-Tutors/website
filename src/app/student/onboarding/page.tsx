@@ -19,11 +19,12 @@ export default function StudentOnboarding() {
     goalsAndObjectives: "",
     tutoringPreference: "BOTH",
   });
+  
   const [subjects, setSubjects] = useState<Subject[]>([]);
 
   const createProfile = api.student.createProfile.useMutation({
     onSuccess: () => {
-      router.push("/dashboard");
+      router.push("/student/dashboard");
     },
     onError: (error) => {
       console.error("Error creating student profile:", error);
@@ -31,7 +32,9 @@ export default function StudentOnboarding() {
     },
   });
 
-  const { data: subjectsData } = api.student.getAllSubjects.useQuery();
+  const updateOnboarded = api.user.updateOnboarded.useMutation();
+
+  const { data: subjectsData } = api.subject.getAll.useQuery();
 
   useEffect(() => {
     if (subjectsData) {
@@ -52,13 +55,25 @@ export default function StudentOnboarding() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (session?.user?.id) {
-      createProfile.mutate({
-        userId: session.user.id,
-        grade: parseInt(studentInfo.grade),
-        subjectIds: studentInfo.subjectIds,
-        goalsAndObjectives: studentInfo.goalsAndObjectives,
-        tutoringPreference: studentInfo.tutoringPreference as "IN_PERSON" | "ONLINE" | "BOTH",
-      });
+      try {
+        await createProfile.mutateAsync({
+          userId: session.user.id,
+          grade: parseInt(studentInfo.grade),
+          subjectIds: studentInfo.subjectIds,
+          goalsAndObjectives: studentInfo.goalsAndObjectives,
+          tutoringPreference: studentInfo.tutoringPreference as "IN_PERSON" | "ONLINE" | "BOTH",
+        });
+  
+        // Call the updateOnboarded mutation after creating the profile
+        await updateOnboarded.mutateAsync({
+          onboarded: true,
+        });
+  
+        router.push("/student/dashboard");
+      } catch (error) {
+        console.error("Error during the onboarding process:", error);
+        // You might want to show an error message to the user here
+      }
     }
   };
 

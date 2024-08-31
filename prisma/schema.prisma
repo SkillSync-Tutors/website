@@ -13,7 +13,8 @@ model User {
   email         String?   @unique
   emailVerified DateTime?
   image         String?
-  role          String?   // Can be "STUDENT", "TUTOR", or "ADMIN"
+  userType      String    @default("UNSPECIFIED") // "UNSPECIFIED", "STUDENT", "TUTOR", or "ADMIN"
+  onboarded     Boolean   @default(false)
   tutor         Tutor?
   student       Student?
   accounts      Account[]

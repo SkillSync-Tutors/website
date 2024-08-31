@@ -5,7 +5,8 @@ CREATE TABLE "User" (
     "email" TEXT,
     "emailVerified" DATETIME,
     "image" TEXT,
-    "role" TEXT NOT NULL
+    "userType" TEXT NOT NULL DEFAULT 'UNSPECIFIED',
+    "onboarded" BOOLEAN NOT NULL DEFAULT false
 );
 
 -- CreateTable
@@ -99,6 +100,9 @@ CREATE UNIQUE INDEX "Tutor_userId_key" ON "Tutor"("userId");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Student_userId_key" ON "Student"("userId");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Subject_name_key" ON "Subject"("name");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Account_provider_providerAccountId_key" ON "Account"("provider", "providerAccountId");

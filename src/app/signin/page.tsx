@@ -13,8 +13,8 @@ export default function SignIn() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const checkOnboardingStatus = api.student.checkOnboardingStatus.useQuery(
-    { userId: session?.user?.id ?? 0 },
+  const checkUserStatus = api.user.checkStatus.useQuery(
+    { userId: session?.user?.id ?? -1 },
     { enabled: !!session?.user?.id }
   );
 
@@ -27,19 +27,23 @@ export default function SignIn() {
 
   useEffect(() => {
     if (status === "authenticated" && session?.user?.id) {
-      checkOnboardingStatus.refetch();
+      checkUserStatus.refetch();
     }
   }, [status, session]);
 
   useEffect(() => {
-    if (checkOnboardingStatus.data) {
-      if (checkOnboardingStatus.data.onboardingCompleted) {
-        router.push("/dashboard");
+    if (checkUserStatus.data) {
+      if (checkUserStatus.data.userType === "ADMIN") {
+        router.push("/admin");
+      } else if (checkUserStatus.data.userType === "UNSPECIFIED") {
+        router.push("/user-type");
+      } else if (checkUserStatus.data.onboarded) {
+        router.push(`/${checkUserStatus.data.userType.toLowerCase()}/dashboard`);
       } else {
-        router.push("/student-onboarding");
+        router.push(`/${checkUserStatus.data.userType.toLowerCase()}/onboarding`);
       }
     }
-  }, [checkOnboardingStatus.data, router]);
+  }, [checkUserStatus.data, router]);
 
   const handleSignIn = async () => {
     setIsLoading(true);
@@ -57,8 +61,12 @@ export default function SignIn() {
     }
   };
 
-  if (status === "loading" || checkOnboardingStatus.isLoading) {
-    return <div>Loading...</div>;
+  if (status === "loading") {
+    return <div>Loading session...</div>;
+  }
+  
+  if (checkUserStatus.isLoading) {
+    return <div>Loading user status...</div>;
   }
 
   return (

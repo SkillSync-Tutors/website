@@ -12,14 +12,28 @@ const subjects = [
   ];
 
 async function main() {
-for (const subject of subjects) {
-    await prisma.subject.upsert({
-    where: { name: subject },
-    update: {},
-    create: { name: subject },
-    })
-}
-console.log('Subjects seeded successfully')
+    // Seed subjects
+    for (const subject of subjects) {
+        await prisma.subject.upsert({
+        where: { name: subject },
+        update: {},
+        create: { name: subject },
+        })
+    }
+    console.log('Subjects seeded successfully')
+
+    // Create admin user
+    // const adminUser = await prisma.user.upsert({
+    //     where: { email: 'edwarddgao@gmail.com' },
+    //     update: {},
+    //     create: {
+    //     email: 'edwarddgao@gmail.com',
+    //     name: 'Edward Gao',
+    //     userType: 'ADMIN',
+    //     // You may want to add other fields here as needed
+    //     },
+    // })
+    // console.log(`Admin user created with id: ${adminUser.id}`)
 }
 
 main()
